@@ -1,3 +1,5 @@
+import random
+
 class Team:
   def __init__(self, name):
     ''' Initialize your team with its team name and an empty list of heroes
@@ -31,3 +33,27 @@ class Team:
   def add_hero(self, hero):
     '''Add Hero object to self.heroes.'''
     self.heroes.append(hero)
+
+  def stats(self):
+    for hero in self.heroes:
+      kd = hero.kills / hero.deaths
+      print(f"{hero.name} Kill/Deaths:{kd}")
+
+  def revive_heroes(self, health=100):
+    for hero in self.heroes:
+      hero.current_health = hero.starting_health
+
+  def attack(self, other_team):
+    living_heroes = list(self.heroes)
+    living_opponents = list(other_team.heroes)
+
+    while len(living_heroes) > 0 and len(living_opponents) > 0:
+      hero = random.choice(living_heroes)
+      opponent = random.choice(living_opponents)
+
+      hero.fight(opponent)
+
+      if hero.is_alive():
+        living_heroes.remove(hero)
+      if not opponent.is_alive():
+        living_opponents.remove(opponent)

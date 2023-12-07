@@ -11,13 +11,16 @@ class Hero:
     self.current_health = starting_health
 
     self.abilities = list()
-    self.armor = list()
+    self.armors = list()
+
+    self.deaths = 0
+    self.kills = 0
 
   def add_ability(self, ability):
     self.abilities.append(ability)
 
   def add_armor(self, armor):
-    self.armor.append(armor)
+    self.armors.append(armor)
 
   def attack(self):
     total_damage = 0 
@@ -30,7 +33,7 @@ class Hero:
     total_block = 0
     if self.current_health == 0:
       return total_block
-    for armor in self.armor:
+    for armor in self.armors:
       total_block += armor.block()
     return total_block
 
@@ -60,14 +63,25 @@ class Hero:
         if opponent.is_alive():
           total_damage = opponent.attack()
           self.take_damage(total_damage)
+          
           if not self.is_alive():
             print(f"{opponent.name} won!")
+            self.add_deaths()
+            opponent.add_kills()
             return
         print(f"{self.name} won!")
+        self.add_kills()
+        opponent.add_deaths()
 
   def add_weapon(self, weapon):
     self.abilities.append(weapon)
     pass
+
+  def add_kills(self):
+    self.kills += 1
+  
+  def add_deaths(self):
+    self.deaths += 1
 
 if __name__ == "__main__":
   # If you run this file from the terminal
