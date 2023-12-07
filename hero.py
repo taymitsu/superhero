@@ -1,6 +1,8 @@
 import random
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
+from team import Team
 
 class Hero:
   def __init__(self, name, starting_health=100):
@@ -62,6 +64,10 @@ class Hero:
             print(f"{opponent.name} won!")
             return
         print(f"{self.name} won!")
+
+  def add_weapon(self, weapon):
+    self.abilities.append(weapon)
+    pass
 
 if __name__ == "__main__":
   # If you run this file from the terminal
