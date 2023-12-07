@@ -1,4 +1,4 @@
-import random
+from random import randint
 from ability import Ability
 from armor import Armor
 from weapon import Weapon
