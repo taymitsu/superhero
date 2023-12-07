@@ -1,4 +1,4 @@
-import random 
+import random
 from ability import Ability
 from armor import Armor
 
@@ -10,13 +10,6 @@ class Hero:
 
     self.abilities = list()
     self.armor = list()
-
-  def fight(self, opponent):
-    heroes = [self, opponent]
-    if random.choice(heroes) == self:
-      print(f"{self.name} defeats {opponent.name}!")
-    else:
-      print(f"{opponent.name} defeats {self.name}!")
 
   def add_ability(self, ability):
     self.abilities.append(ability)
@@ -54,12 +47,34 @@ class Hero:
     else: 
       return True
 
+  def fight(self, opponent):
+    if len(self.abilities) == 0 and len(opponent.abilities) == 0:
+      print("Draw!")
+    else: 
+      while self.is_alive() and opponent.is_alive():
+        total_damage = self.attack()
+        opponent.take_damage(total_damage)
+
+        if opponent.is_alive():
+          total_damage = opponent.attack()
+          self.take_damage(total_damage)
+          if not self.is_alive():
+            print(f"{opponent.name} won!")
+            return
+        print(f"{self.name} won!")
+
 if __name__ == "__main__":
   # If you run this file from the terminal
   # this block is executed.
 
-  hero = Hero("Grace Hopper", 200)
-  hero.take_damage(150)
-  print(hero.is_alive())
-  hero.take_damage(15000)
-  print(hero.is_alive())
+  hero1 = Hero("Wonder Woman")
+  hero2 = Hero("Dumbledore")
+  ability1 = Ability("Super Speed", 300)
+  ability2 = Ability("Super Eyes", 130)
+  ability3 = Ability("Wizard Wand", 80)
+  ability4 = Ability("Wizard Beard", 20)
+  hero1.add_ability(ability1)
+  hero1.add_ability(ability2)
+  hero2.add_ability(ability3)
+  hero2.add_ability(ability4)
+  hero1.fight(hero2)
